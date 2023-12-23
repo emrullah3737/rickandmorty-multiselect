@@ -6,6 +6,7 @@ import { twMerge } from "tailwind-merge";
 import Badge from "./Badge";
 import IconArrowDown from "@/assets/icons/arrowDown";
 import IconLoading from "@/assets/icons/loading";
+import usePrevious from "@/hooks/usePrevious";
 
 interface IProps<T> {
   options: (T & { id: number; name: string })[];
@@ -28,6 +29,7 @@ export default function MultiSelect<T>({
 }: IProps<T>) {
   const [open, setOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<typeof options>([]);
+  const previousSelectedOptions = usePrevious(selectedOptions);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(containerRef, () => {
@@ -35,8 +37,10 @@ export default function MultiSelect<T>({
   });
 
   useEffect(() => {
-    onSelectOptions(selectedOptions);
-  }, [onSelectOptions, selectedOptions]);
+    if (previousSelectedOptions !== selectedOptions) {
+      onSelectOptions(selectedOptions);
+    }
+  }, [onSelectOptions, selectedOptions, previousSelectedOptions]);
 
   const handleSelect = (item: (typeof options)[number]) => {
     let newSelectedOptions = selectedOptions;
