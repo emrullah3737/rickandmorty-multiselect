@@ -60,7 +60,7 @@ export default function MultiSelect<T>({
   };
 
   return (
-    <div ref={containerRef} className="m-4 relative">
+    <div ref={containerRef} className="relative bg-white">
       <div
         onClick={() => {
           setOpen(true);

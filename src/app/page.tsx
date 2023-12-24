@@ -12,7 +12,7 @@ export default function Home() {
   const { list, isError, isFetching } = useFetchRickAndMorty(bouncedSearchText);
 
   return (
-    <div className="m-auto max-w-[600px]">
+    <div className="m-auto p-4 h-screen max-w-[600px]">
       <MultiSelect<(typeof list)[number]>
         placeholder="Search"
         options={list}
